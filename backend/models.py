@@ -10,7 +10,8 @@ def create_tables():
         contenido TEXT NOT NULL,
         alias TEXT NOT NULL,
         fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        likes INTEGER DEFAULT 0
+        likes INTEGER DEFAULT 0,
+        original_id INTEGER
     )
     """)
 
@@ -74,6 +75,39 @@ def create_comment(contenido, post_id, alias):
     cursor.execute(
         "INSERT INTO comentarios (contenido, post_id, alias) VALUES (?, ?, ?)",
         (contenido, post_id, alias)
+    )
+
+    conn.commit()
+    conn.close()
+
+def like_post(post_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE posts SET likes = likes + 1 WHERE id = ?",
+        (post_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+def repost_post(post_id, alias):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # obtener post original
+    cursor.execute("SELECT * FROM posts WHERE id = ?", (post_id,))
+    original = cursor.fetchone()
+
+    if not original:
+        conn.close()
+        return
+
+    # crear repost
+    cursor.execute(
+        "INSERT INTO posts (contenido, alias, original_id) VALUES (?, ?, ?)",
+        (original["contenido"], alias, post_id)
     )
 
     conn.commit()

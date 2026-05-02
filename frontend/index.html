@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>APIpost</title>
+<meta charset="UTF-8">
+<title>APIpost</title>
+<link rel="stylesheet" href="style.css">
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
 
-<h1>APIpost 🚀</h1>
+<!-- NAVBAR -->
+<header class="navbar">
+    <h1>APIpost</h1>
+</header>
 
-<textarea id="contenido" placeholder="Escribí algo..."></textarea>
-<br>
-<button onclick="crearPost()">Publicar</button>
+<!-- CREAR POST -->
+<section class="create-post">
+    <textarea id="contenido" placeholder="Escribí algo como si fuera código..."></textarea>
+    
+    <div class="actions">
+        <input type="file" id="archivo">
+        <button onclick="crearPost()">Publicar</button>
+    </div>
+</section>
 
-<hr>
-
-<div id="posts"></div>
+<!-- FEED -->
+<main id="posts"></main>
 
 <script src="app.js"></script>
-
 </body>
 </html>
